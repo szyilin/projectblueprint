@@ -13,7 +13,7 @@
 - 在本仓库加入业务应用代码
 - 推广单一框架为「官方唯一推荐」
 - 巨型 AGENTS.md（应拆到 docs/）
-- 只改 `.cursor/skills/project-intake/` 而不跑 sync（会被覆盖）
+- 在 Skill 或用户文档中绑定特定 AI 工具、IDE 或专有 MCP
 
 ## 改流程的检查清单
 
@@ -29,7 +29,7 @@
 ## 本地安装自测
 
 ```bash
-./scripts/install-skill.sh
+AGENT_SKILLS_DIR=/tmp/skills-test ./scripts/install-skill.sh
 ```
 
-在新 Cursor 会话中触发「从零做 Java API」验证 Skill 是否加载。
+在新 Agent 会话中触发「从零做一个 API 项目」验证 Skill 是否加载。

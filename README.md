@@ -1,6 +1,6 @@
 # Project Blueprint
 
-**用 AI 从 0 搭项目的 Cursor Skill（立项引导 Harness）**
+**用 AI 从 0 搭项目的通用 Agent Skill（立项引导 Harness）**
 
 本仓库**不包含任何业务代码**。它是 **project-intake** Skill 的源码库：流程文档、模板、安装脚本。
 
@@ -15,16 +15,20 @@
 
 ## 快速开始
 
-### 1. 安装 Skill（推荐）
+### 1. 安装 Skill
 
 ```bash
-git clone <this-repo> project-blueprint
-cd project-blueprint
+git clone git@github.com:szyilin/projectblueprint.git
+cd projectblueprint
 chmod +x scripts/*.sh
+
+export AGENT_SKILLS_DIR="$HOME/skills"   # 改为你 Agent 的 Skills 目录
 ./scripts/install-skill.sh
 ```
 
-Skill 会安装到 `~/.cursor/skills/project-intake/`。重启 Cursor 或新开 Agent 会话后生效。
+也可手动复制 `skill/` 到 Skills 目录，详见 [skill/INSTALL.md](skill/INSTALL.md)。
+
+安装后**新开一次 Agent 会话**使 Skill 生效。
 
 ### 2. 在任意项目中使用
 
@@ -32,7 +36,7 @@ Skill 会安装到 `~/.cursor/skills/project-intake/`。重启 Cursor 或新开 
 
 > 我要从零开始做一个 XXX 项目，请按 Project Blueprint 引导我。
 
-Agent 应加载 **project-intake** Skill，按流程提问（**一次一问**），自动创建/切换项目目录，立项批准后再脚手架。
+Agent 应加载 **project-intake** Skill，按流程提问（**一次一问**），自动创建项目目录，立项批准后再脚手架。
 
 ### 3. 维护本仓库（贡献者）
 
@@ -46,10 +50,10 @@ Agent 应加载 **project-intake** Skill，按流程提问（**一次一问**）
 | 路径 | 用途 |
 |------|------|
 | [`skill/`](skill/) | **可安装的 Skill 包**（`SKILL.md` + `reference/` + `templates/`） |
+| [`skill/INSTALL.md`](skill/INSTALL.md) | 各 Agent 通用安装说明 |
 | [`docs/`](docs/) | 流程真源（人类 PR review）；同步进 `skill/reference/` |
 | [`templates/`](templates/) | 新项目文档模板；同步进 `skill/templates/` |
 | [`scripts/`](scripts/) | `sync-skill.sh`、`install-skill.sh` |
-| [`.cursor/skills/project-intake/`](.cursor/skills/project-intake/) | 开发态副本（由 sync 生成，勿手改） |
 
 ## 文档地图
 
@@ -66,8 +70,8 @@ Agent 应加载 **project-intake** Skill，按流程提问（**一次一问**）
 
 | 是 | 不是 |
 |----|------|
-| Cursor Skill 源码 + 流程真源 | 可直接 `mvn run` 的应用 |
-| 标准立项阶段与决策框架 | 某框架的官方模板库 |
+| 通用 Agent Skill 源码 + 流程真源 | 可直接运行的业务应用 |
+| 标准立项阶段与决策框架 | 某语言/框架的官方模板库 |
 | 产出物模板 | 「必须用某某框架」的硬性清单 |
 
 ## 许可证

@@ -21,10 +21,10 @@ description: >-
 | 当前工作区为空目录或仅含 `.git` | `target_path` = 当前工作区根目录 |
 | 当前在 meta/harness 仓库（含 `skill/SKILL.md` 或 `docs/INTAKE.md`） | `target_path` = 父目录下 `{slug}`（从用户描述 slugify：小写、连字符） |
 | 当前为非空业务仓库 | **此时才问**：在本仓库扩展，还是新建 `../{slug}`？ |
-| 目录不存在 | 调用 MCP `create_project`（path = `target_path`） |
-| 需要在新目录继续开发 | 调用 MCP `move_agent_to_root`（path = `target_path`） |
+| 目录不存在 | 创建目录并初始化仓库（`mkdir -p` + `git init`） |
+| 工作区与 `target_path` 不一致 | 在 `target_path` 下继续写入；若环境支持切换工作区则切换，否则请用户打开该目录后继续 |
 
-Slug 示例：`Java CRM 管理系统` → `java-crm`。
+Slug 示例：`CRM 管理系统` → `crm-system`。
 
 向用户**简短告知**已选路径（一行即可），不要为此单独占用一整轮对话，除非发生冲突需用户选择。
 
@@ -42,7 +42,7 @@ Slug 示例：`Java CRM 管理系统` → `java-crm`。
 
 Reference 内若出现 `docs/xxx`，对应本 Skill 的 `reference/xxx`。模板在 [templates/](templates/)。
 
-## Checklist（用 TodoWrite 跟踪）
+## Checklist（逐项跟踪，完成打勾）
 
 - [ ] Phase 0 — 解析 `target_path`（冲突时才问用户）
 - [ ] Phase 1 — 产品意图 Q1～Q5
@@ -66,7 +66,7 @@ Reference 内若出现 `docs/xxx`，对应本 Skill 的 `reference/xxx`。模板
 
 - 读 `reference/DECISION-GUIDE.md`：给 2～3 方案 + trade-off，等用户选
 - `reference/stacks/<domain>/` 仅追加问题与里程碑建议，**不覆盖**用户选择
-- 脚手架用官方 CLI，禁止手写完整构建树
+- 脚手架用官方 CLI 或官方模板，禁止手写完整构建树
 
 ## 产出位置
 
@@ -74,18 +74,18 @@ Reference 内若出现 `docs/xxx`，对应本 Skill 的 `reference/xxx`。模板
 
 - `docs/product/CONTRACT.md`
 - `docs/ARCHITECTURE.md`
-- `AGENTS.md`
+- `AGENTS.md`（[agents.md](https://agents.md) 开放格式）
 - `docs/plans/00-first-milestone.md`
 
-**禁止**在 meta/harness 仓库（project-blueprint）内创建业务源码。
+**禁止**在 meta/harness 源码仓库内创建业务源码。
 
 ## Red Flags
 
 | 念头 | 现实 |
 |------|------|
 | 太简单不用问 | 简单项目更需要边界 |
-| 直接 Spring/FastAPI | 须用户确认 |
-| 在 harness 仓库写 src | 禁止 |
+| 未确认就定技术栈 | 须用户明确选择 |
+| 在 harness 仓库写业务代码 | 禁止 |
 | 一次搭完整 V1 | 违反 PHASES |
 | 默认必问路径 | 先走路径解析表 |
 

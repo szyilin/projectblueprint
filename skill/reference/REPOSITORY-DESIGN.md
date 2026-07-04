@@ -8,13 +8,13 @@
 1. **让不懂从 0 搭项目的人**，在 AI 引导下走完标准流程，不走弯路
 2. **让有经验的人**，跳过已知的问卷环节，但仍产出统一契约文档
 3. **技术栈保持开放** —— 流程固定，框架不固定
-4. **跨工具** —— 以可安装 Cursor Skill 为主入口，`docs/` 为流程真源
+4. **跨工具** —— 以可安装 Agent Skill 为主入口，`docs/` 为流程真源
 
-### 决策 5：全局 Skill + 路径自动推断（V2）
+### 决策 5：全局 Skill + 路径自动推断
 
-- 用户**不必**先打开本仓库；`./scripts/install-skill.sh` 安装到 `~/.cursor/skills/project-intake/`
+- 用户**不必**先打开本仓库；将 `skill/` 安装到 Agent 的 Skills 目录（见 `skill/INSTALL.md`）
 - Phase 0 **默认推断** `target_path`（空目录 / meta 仓库 / 用户已给路径）；仅非空业务仓库时才问
-- MCP `create_project` + `move_agent_to_root` 创建并切换工作区
+- 目录不存在时 `mkdir -p` + `git init`；工作区不一致时写入目标路径或请用户切换工作区
 
 ## 核心设计决策
 
@@ -70,23 +70,21 @@ Layer B **不是**「Spring Boot 教程」，而是：
 project-blueprint/
 ├── skill/                 # 可安装 Skill 包（SKILL.md + reference/ + templates/）
 ├── scripts/
-│   ├── sync-skill.sh      # docs/ → skill/reference/，并更新 .cursor/skills/
-│   └── install-skill.sh   # 安装到 ~/.cursor/skills/project-intake/
+│   ├── sync-skill.sh      # docs/ → skill/reference/
+│   └── install-skill.sh   # 安装到 AGENT_SKILLS_DIR 或指定路径
 ├── AGENTS.md              # 维护者入口（薄）
 ├── README.md              # 人类入口
 ├── docs/                  # 流程真源（编辑后 sync）
 ├── templates/             # 新项目模板真源
 ├── examples/
-├── .cursor/
-│   ├── rules/
-│   └── skills/project-intake/   # 开发态副本（sync 生成，勿手改）
-└── (无 src/, 无应用级 pom.xml / package.json)
+├── .cursor/rules/         # 可选：本仓库维护用编辑器规则
+└── (无 src/, 无应用级构建文件)
 ```
 
 用户的新项目创建在 **`target_path`**（自动推断或用户指定），例如：
 
 ```text
-~/projects/java-crm/           ← 真实代码（create_project + move_agent_to_root）
+~/projects/my-app/                  ← 真实代码
 ~/study/project/project-blueprint/  ← 仅维护 Harness 源码
 ```
 
@@ -103,7 +101,7 @@ project-blueprint/
 用户安装 Skill（install-skill.sh）或在任意工作区触发 project-intake
         │
         ▼
-Phase 0 — 推断 target_path（默认不问）→ create_project / move_agent_to_root
+Phase 0 — 推断 target_path（默认不问）→ 创建目录 / 初始化 git
         │
         ▼
 Phase 1～4 — Intake（reference/INTAKE.md，一次一问）

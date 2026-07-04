@@ -12,6 +12,7 @@ alwaysApply: true
 - 改流程时更新 `docs/` 与 `skill/SKILL.md`，并运行 `scripts/sync-skill.sh`
 - 新增 stack profile 只加三文件：`questions.md`、`decision-forks.md`、`first-milestone.md`
 - 保持 `AGENTS.md` 精简（<150 行），细节放 `docs/`
+- Skill 与用户文档不得绑定特定 AI 工具、IDE 或专有协议
 
 ## 禁止
 
