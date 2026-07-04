@@ -1,0 +1,24 @@
+---
+description: 在本仓库内编辑 Project Blueprint Harness 文档时的规则
+alwaysApply: true
+---
+
+# Project Blueprint — 仓库内规则
+
+本仓库是 **Meta Harness**，不是业务项目。
+
+## 必须
+
+- 改流程时更新 `docs/` 与 `skill/SKILL.md`，并运行 `scripts/sync-skill.sh`
+- 新增 stack profile 只加三文件：`questions.md`、`decision-forks.md`、`first-milestone.md`
+- 保持 `AGENTS.md` 精简（<150 行），细节放 `docs/`
+
+## 禁止
+
+- 在本仓库添加 `src/`、应用级 `pom.xml`、`package.json`（演示业务）
+- 在 profile 中写死「必须用 XXX 框架 Y.Y.Y」
+- 把 RelayFlow 或其他项目的业务代码复制进来
+
+## 验证
+
+改 Skill 或 INTAKE 流程后，用假想场景试跑：Java API、Python LLM 各一次，检查 AI 是否会跳步。
